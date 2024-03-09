@@ -1,4 +1,14 @@
 ###
-GET http://localhost:1337
+GET http://localhost:13000
 
 ###
+GET http://localhost:13000/createTable
+
+###
+POST http://localhost:13000
+Content-Type: application/json
+
+{
+    "name": "taif",
+    "location": "University Road"
+}

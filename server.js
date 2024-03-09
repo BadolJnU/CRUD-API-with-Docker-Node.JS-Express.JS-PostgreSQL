@@ -1,7 +1,7 @@
 const express = require('express')
 const pool = require('./db')
 
-const port = 1337
+const port = 3000
 
 const app = express()
 app.use(express.json())
@@ -37,6 +37,37 @@ app.get('/createTable', async(req, res) => {
             message: "successfully created the table"
         })
     } catch (err) {
+        res.sendStatus(500)
+    }
+})
+
+//update user api
+app.put('/:id', async(req, res) => {
+    const id = parseInt(req.params.id)
+    const { name } = req.body
+    console.log(id, name)
+
+    try {
+        await pool.query('UPDATE schools SET name = $1 WHERE id = $2', [name, id])
+        res.status(200).send({
+            message: "successfully updated the data into the table"
+        })
+    } catch (err) {
+        console.log(err)
+        res.sendStatus(500)
+    }
+})
+//delete user api
+app.delete('/:id', async(req, res) => {
+    const id = parseInt(req.params.id)
+
+    try {
+        await pool.query('DELETE schools WHERE id = $1', [id])
+        res.status(200).send({
+            message: "successfully deleted the data into the table"
+        })
+    } catch (err) {
+        console.log(err)
         res.sendStatus(500)
     }
 })
